@@ -3,4 +3,5 @@
     <string name="tap_start_tracking_to_start_tracking_location">message_start_tracking</string>
     <string name="start_tracking">Start Tracking</string>
     <string name="message_start_tracking">Tap \'Start Tracking\' to track location.</string>
+    <string name="message_need_permission_location">The app needs location access to show its results. Please grant location permission.</string>
 </resources>
