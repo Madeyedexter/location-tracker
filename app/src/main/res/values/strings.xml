@@ -4,4 +4,6 @@
     <string name="start_tracking">Start Tracking</string>
     <string name="message_start_tracking">Tap \'Start Tracking\' to track location.</string>
     <string name="message_need_permission_location">The app needs location access to show its results. Please grant location permission.</string>
+    <string name="message_no_permission">Location permissions not granted.</string>
+    <string name="message_setting_high_accruacy">\"Please make sure that location settings is set to high accuracy\"</string>
 </resources>

@@ -23,9 +23,6 @@
             android:id="@+id/tvLocationInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minLines="1"
-            android:lines="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:padding="16dp"
             />
         <Button

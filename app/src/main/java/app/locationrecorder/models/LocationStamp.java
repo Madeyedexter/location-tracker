@@ -25,6 +25,69 @@ public class LocationStamp implements Parcelable {
         nextInterval = in.readInt();
     }
 
+    public LocationStamp(){}
+
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public double getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(double timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public int getCurrentInterval() {
+        return currentInterval;
+    }
+
+    public void setCurrentInterval(int currentInterval) {
+        this.currentInterval = currentInterval;
+    }
+
+    @Override
+    public String toString() {
+        return "LocationStamp{" +
+                "timestamp=" + timestamp +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", currentInterval=" + currentInterval +
+                ", nextInterval=" + nextInterval +
+                ", speed=" + speed +
+                '}';
+    }
+
+    public int getNextInterval() {
+        return nextInterval;
+    }
+
+    public void setNextInterval(int nextInterval) {
+        this.nextInterval = nextInterval;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(id);
@@ -51,4 +114,6 @@ public class LocationStamp implements Parcelable {
             return new LocationStamp[size];
         }
     };
+
+    public float speed;
 }
