@@ -115,5 +115,5 @@ public class LocationStamp implements Parcelable {
         }
     };
 
-    public float speed;
+    public double speed;
 }

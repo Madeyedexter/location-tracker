@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private TextView tvLocationInfo;
     private Button buttonStartTracking;
 
-    private long previousTime;
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy - hh:mm:ss:SSS");
 
@@ -47,13 +46,56 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private boolean tracking=false;
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationCallback mLocationCallback = new LocationCallback(){
+
+        long previousTime;
+        Location previousLocation;
+        UpdateInterval nextInterval;
+        double previousSpeed;
+
         @Override
         public void onLocationResult(LocationResult locationResult) {
             super.onLocationResult(locationResult);
-            Log.d(TAG,"Location count: "+locationResult.getLocations().size());
-            Location lastLocation = tvLocationInfo.getTag()==null?locationResult.getLastLocation():(Location)tvLocationInfo.getTag();
-            Location currentlocation = locationResult.getLocations().get(0);
-            LocationStamp locationStamp = LocationUtils.getLocationModelStamp(lastLocation,currentlocation);
+            Location currentLocation = locationResult.getLocations().get(0);
+            LocationStamp locationStamp = new LocationStamp();
+            if(previousTime==0){
+                //this block is executed only once at the beginning
+                //no previous location
+                previousTime = System.currentTimeMillis();
+                previousLocation = currentLocation;
+                //since we do not have the speed yet, we will rely on location.getSpeed() to get the current speed
+                previousSpeed = currentLocation.getSpeed();
+                nextInterval = LocationUtils.getIntervalFromSpeed(previousSpeed);
+                //start off with a tiny interval
+                int currentInterval = UpdateInterval.TINY.getInterval();
+                locationStamp.setCurrentInterval(currentInterval);
+                locationStamp.setLatitude(currentLocation.getLatitude());
+                locationStamp.setLongitude(currentLocation.getLongitude());
+                locationStamp.setNextInterval(nextInterval.getInterval());
+                locationStamp.setTimestamp(previousTime);
+                locationStamp.speed = previousSpeed*3.6;
+            }
+            else{
+                long elapsedTime = System.currentTimeMillis()-previousTime;
+                previousTime = System.currentTimeMillis();
+                double distanceMeters = LocationUtils.getDistanceFromLatLon(previousLocation.getLatitude(), previousLocation.getLongitude(),currentLocation.getLatitude(), currentLocation.getLongitude());
+                double speedMS = (distanceMeters*1000)/elapsedTime;
+                locationStamp.setCurrentInterval(nextInterval.getInterval());
+                locationStamp.setLatitude(currentLocation.getLatitude());
+                locationStamp.setLongitude(currentLocation.getLongitude());
+                UpdateInterval actualInterval = LocationUtils.getIntervalFromSpeed(speedMS);
+                UpdateInterval calculatedNextInterval = nextInterval;
+                if(actualInterval.getInterval() > nextInterval.getInterval())
+                    calculatedNextInterval = nextInterval.decrement();
+                else if (actualInterval.getInterval() < nextInterval.getInterval())
+                    calculatedNextInterval = nextInterval.increment();
+                locationStamp.setNextInterval(calculatedNextInterval.getInterval());
+                locationStamp.setTimestamp(previousTime);
+                locationStamp.speed = speedMS*3.6;
+
+                previousLocation = currentLocation;
+                previousSpeed = speedMS;
+                nextInterval = calculatedNextInterval;
+            }
             tvLocationInfo.setText(locationStamp.toString());
         }
     };

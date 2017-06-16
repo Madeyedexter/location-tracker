@@ -22,13 +22,13 @@ public class LocationUtils {
 
     public static final int PERMISSION_REQUEST_FINE_LOCATION = 1;
 
-    public static final double RADIUS_EARTH_KM = 6371;
+    public static final double RADIUS_EARTH_METER = 6371000;
 
 
 
     private LocationUtils(){}
 
-    public static double getDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2) {
+    public static double getDistanceFromLatLon(double lat1, double lon1, double lat2, double lon2) {
         double dLat = toRadian(lat2-lat1);  // deg2rad below
         double dLon = toRadian(lon2-lon1);
         double a =
@@ -37,8 +37,7 @@ public class LocationUtils {
                                 Math.sin(dLon/2) * Math.sin(dLon/2)
                 ;
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        double d = RADIUS_EARTH_KM * c; // Distance in km
-        return d;
+        return RADIUS_EARTH_METER * c; // Distance in m
     }
 
     private static final double toRadian(double degree) {
@@ -49,7 +48,6 @@ public class LocationUtils {
         int permissionCheck = ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.ACCESS_FINE_LOCATION);
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            Log.d(TAG,"Permission Granted: True" );
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
 
@@ -94,9 +92,9 @@ public class LocationUtils {
         return locationStamp;
     }
 
-    private static UpdateInterval getIntervalFromSpeed(float mSpeed){
+    public static UpdateInterval getIntervalFromSpeed(double mSpeed){
         UpdateInterval interval;
-        float kmSpeed = mSpeed/1000;
+        double kmSpeed = mSpeed*3.6;
         if(kmSpeed >= 80)
             interval = UpdateInterval.TINY;
         else if(kmSpeed < 80 && kmSpeed >= 60)
@@ -105,29 +103,5 @@ public class LocationUtils {
             interval = UpdateInterval.MEDIUM;
         else interval = UpdateInterval.LARGE;
         return interval;
-    }
-
-    private enum UpdateInterval{ TINY(30000), SMALL(60000), MEDIUM(120000), LARGE(300000);
-        private int interval;
-
-        UpdateInterval(int interval){
-            this.interval=interval;
-        }
-
-        public int getInterval(){
-            return interval;
-        }
-
-        public UpdateInterval increment(){
-            return this.ordinal() < UpdateInterval.values().length-1
-                    ? UpdateInterval.values()[this.ordinal()+1]
-                    : UpdateInterval.values()[this.ordinal()];
-        }
-
-        public UpdateInterval decrement(){
-            return this.ordinal() < UpdateInterval.values().length-1
-                    ? UpdateInterval.values()[this.ordinal()+1]
-                    : UpdateInterval.values()[this.ordinal()];
-        }
     }
 }
