@@ -1,37 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="app.locationrecorder.MainActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
 
         >
+
         <TextView
             android:id="@+id/tvStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/message_start_tracking"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:padding="16dp"
-            />
-        <TextView
-            android:id="@+id/tvLocationInfo"
+            android:freezesText="true" />
+
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            />
+            android:stretchColumns="*"
+            android:shrinkColumns="*"
+            android:id="@+id/tableData">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
+
+                <TextView android:text="@string/timestamp" />
+
+                <TextView
+                    android:id="@+id/tvTimestamp"
+                    tools:text="@string/timestamp"
+                    android:freezesText="true" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
+
+                <TextView android:text="@string/latitude" />
+
+                <TextView
+                    android:id="@+id/tvLatitude"
+                    tools:text="@string/latitude"
+                    android:freezesText="true" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
+
+                <TextView android:text="@string/longitude" />
+
+                <TextView
+                    android:id="@+id/tvLongitude"
+                    tools:text="@string/longitude"
+                    android:freezesText="true" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
+
+                <TextView android:text="@string/current_interval" />
+
+                <TextView
+                    android:id="@+id/tvCurrentInterval"
+                    tools:text="@string/current_interval"
+                    android:freezesText="true" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
+
+                <TextView android:text="@string/next_interval" />
+
+                <TextView
+                    android:id="@+id/tvNextInterval"
+                    tools:text="@string/next_interval"
+                    android:freezesText="true" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
+
+                <TextView android:text="@string/speed_km_hr" />
+
+                <TextView
+                    android:id="@+id/tvSpeed"
+                    tools:text="@string/speed_km_hr"
+                    android:freezesText="true" />
+            </TableRow>
+        </TableLayout>
+
         <Button
             android:id="@+id/buttonStartTracking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/start_tracking"
             android:layout_margin="16dp"
-
-            />
+            android:freezesText="true" />
     </LinearLayout>
 </ScrollView>

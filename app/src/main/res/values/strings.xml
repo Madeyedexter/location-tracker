@@ -6,4 +6,18 @@
     <string name="message_need_permission_location">The app needs location access to show its results. Please grant location permission.</string>
     <string name="message_no_permission">Location permissions not granted.</string>
     <string name="message_setting_high_accruacy">\"Please make sure that location settings is set to high accuracy\"</string>
+    <string name="connecting">Connecting…</string>
+    <string name="requesting_location">Requesting Location…</string>
+    <string name="calculating_speed">Calculating speed…</string>
+    <string name="stop_tracking">Stop Tracking</string>
+    <string name="tracking_in_progress">Tracking in progress…</string>
+    <string name="next_interval">Next Interval</string>
+    <string name="current_interval">Current Interval</string>
+    <string name="longitude">Longitude</string>
+    <string name="latitude">Latitude</string>
+    <string name="timestamp">Timestamp</string>
+    <string name="speed_km_hr">Speed (km/hr)</string>
+    <string name="calc_estimates">Calculating estimates...</string>
+    <string name="connection_failed">Unable to connect to Google Location API</string>
+    <string name="message_no_storage_permission">Storage permissions are needed for this app to work properly.</string>
 </resources>
